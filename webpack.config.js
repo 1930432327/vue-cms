@@ -34,7 +34,7 @@ module.exports = {
             {test: /\.(png|jpg|gif)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]'},
             {test: /\.(ttf|woff2|eot|woff|svg)$/, use: 'url-loader'},
             {test: /\.js$/, use: 'babel-loader', exclude: /node_modules/},
-            { test: /\.vue$/, use: 'vue-loader' }
+            { test: /\.vue$/, use: 'vue-loader' },
         ]
     },
     resolve:{
