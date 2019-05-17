@@ -1,7 +1,11 @@
 <template>
     <div class="app-containerp">
         <!--中间主体部分-->
-        <mt-header fixed title="Vue项目"></mt-header>
+        <mt-header fixed title="Vue项目">
+            <div slot="left">
+                <mt-button icon="back" @click="goPrev">返回</mt-button>
+            </div>
+        </mt-header>
 
         <transition>
             <router-view></router-view>
@@ -28,6 +32,7 @@
                 <span class="mui-tab-label">搜索</span>
             </router-link>
         </nav>
+
     </div>
 </template>
 
@@ -40,19 +45,25 @@
             }
         },
         methods:{
+        goPrev(){
+            this.$router.go(-1);
+        }
         }
     }
 </script>
 
-<style scoped>
+<style  lang="less" scoped>
     .app-containerp {
         padding-top: 40px;
+        padding-bottom: 50px;
         overflow-x: hidden;
     }
+
     .v-enter {
         opacity: 0;
         transform: translateX(100%);
     }
+
     .v-leave-to {
         opacity: 0;
         transform: translateX(-100%);
