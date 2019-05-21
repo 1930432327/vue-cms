@@ -1,12 +1,6 @@
 <template>
     <div id="home">
-        <mt-swipe :auto="2000">
-            <mt-swipe-item v-for="item in lunboList" :key="item.id">
-                <a :href="item.url">
-                    <img :src="item.img" alt="">
-                </a>
-            </mt-swipe-item>
-        </mt-swipe>
+        <Swiper :lunboList="lunboList" :isfull="true"></Swiper>
         <!--九宫格-->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -16,16 +10,16 @@
                 </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <router-link to="/home/newslist" tag="a" >
+                <router-link to="/home/photolist" tag="a" >
                     <img src="../../image/menu2.png" class="mui-icon mui-icon-email"><span class="mui-badge">5</span></img>
                     <div class="mui-media-body">图片分享</div>
                 </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <a href="#">
+                <router-link to="/home/goodslist">
                     <img src="../../image/menu3.png" class="mui-icon mui-icon-chatbubble"></img>
                     <div class="mui-media-body">商品购买</div>
-                </a>
+                </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
                 <img src="../../image/menu4.png" class="mui-icon mui-icon-location"></img>
@@ -45,7 +39,7 @@
 
 <script>
     import {Toast} from 'mint-ui'
-
+    import Swiper from '../subcomponents/Swiper.vue'
     export default {
         name: "Home",
         data() {
@@ -68,29 +62,15 @@
         },
         created() {
             this.getLunbotu();
+        },
+        components:{
+            Swiper:Swiper
         }
     }
 </script>
 
 <style scoped lang="less">
-    .mint-swipe {
-        height: 200px;
-        .mint-swipe-item {
-            &:nth-child(1) {
-                background: pink;
-            }
-            &:nth-child(2) {
-                background: yellow;
-            }
-            &:nth-child(3) {
-                background: green;
-            }
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-    }
+
 
     .mui-grid-view.mui-grid-9 {
         background: white;

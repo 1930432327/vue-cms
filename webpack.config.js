@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 
-const { VueLoaderPlugin } = require('vue-loader');
+const {VueLoaderPlugin} = require('vue-loader');
 //这个配置文件其实就是js配置文件 通过node 中的模块操作  像外暴露了一个配置对象
 module.exports = {
     entry: path.join(__dirname, './src/main.js'), // 入口文件 示要使用webpack打包哪个文件
@@ -16,7 +16,8 @@ module.exports = {
         open: true,//自动打开浏览器
         port: 3000,//设置启动时候运行的端口
         // contentBase:'src',//指定托管的跟目录
-        hot: true//启动热更新 第一步
+        hot: true,//启动热更新 第一步,
+        host:'0.0.0.0'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(), // new 一个热更新的 模块对象， 这是 启用热更新的第 3 步
@@ -34,11 +35,15 @@ module.exports = {
             {test: /\.(png|jpg|gif)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]'},
             {test: /\.(ttf|woff2|eot|woff|svg)$/, use: 'url-loader'},
             {test: /\.js$/, use: 'babel-loader', exclude: /node_modules/},
-            { test: /\.vue$/, use: 'vue-loader' },
+            {test: /\.vue$/, use: 'vue-loader'},
+            {
+                test: /vue-preview.src.*?js$/,
+                loader: 'babel-loader'
+            }
         ]
     },
-    resolve:{
-        alias:{
+    resolve: {
+        alias: {
             // "vue$":'vue/dist/vue.js'
         }
     }

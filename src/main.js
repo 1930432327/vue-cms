@@ -12,7 +12,7 @@ Vue.use(VueResource)
 
 //设置请求的根路径
 Vue.http.options.root = 'http://www.liulongbin.top:3005/';
-
+import 'jquery/dist/jquery.js'
 //引入 Mint UI样式
 import 'mint-ui/lib/style.css'
 // 导入 MUI 的样式
@@ -20,14 +20,17 @@ import './lib/mui/css/mui.min.css'
 // 导入扩展图标样式
 import './lib/mui/css/icons-extra.css'
 
+
 // 按需导入 Mint-UI 中的组件
-import { Header , Button , Swipe, SwipeItem} from 'mint-ui';
+import MintUi from 'mint-ui';
+import 'mint-ui/lib/style.css'
+Vue.use(MintUi);
 
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
-Vue.component(Header.name, Header);
-Vue.component(Button.name, Button);
+/*图片预览插件*/
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview);
 
+import './lib/css/golbal.css'
 // 1.3 导入自己的 router.js 路由模块
 import router from './router.js'
 
