@@ -12,7 +12,6 @@ export default {
     mounted() {
         // 初始化数字选择框组件
         mui(".mui-numbox").numbox();
-        console.log(this.max)
     },
     methods:{
         countChanged(){

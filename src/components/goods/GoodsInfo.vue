@@ -14,7 +14,7 @@
                 @enter="enter"
                 @after-enter="afterenter"
         >
-             <div class='ball' v-show="ballflag" ref="ball"></div>
+            <div class='ball' v-show="ballflag" ref="ball"></div>
         </transition>
         <!--商品购买区域-->
         <div class="mui-card">
@@ -26,8 +26,8 @@
                         <span>销售价格: <i>￥{{goodsinfolist.sell_price}}</i> </span>
                     </p>
                     <p class="shopping-number">
-                       购买数量:
-                          <numbox @getcount="getSelectedCount" :max="goodsinfolist.stock_quantity"></numbox>
+                        购买数量:
+                        <numbox @getcount="getSelectedCount" :max="goodsinfolist.stock_quantity"></numbox>
                     </p>
                     <p>
                         <mt-button type="primary" size="small">立即购买</mt-button>
@@ -58,15 +58,16 @@
 <script>
     import Swiper from '../subcomponents/Swiper.vue'
     import numbox from "../subcomponents/goodsinfo_numbox.vue";
+
     export default {
         name: "GoodsInfo",
         data() {
             return {
                 id: this.$route.params.id,//商品id
                 lunboList: [],//轮播图数据
-                goodsinfolist:{},//商品信息
-                ballflag:false,
-                selectedCount :1//保存用户选中的商品数量
+                goodsinfolist: {},//商品信息
+                ballflag: false,
+                selectedCount: 1//保存用户选中的商品数量
             }
         },
         methods: {
@@ -82,48 +83,59 @@
                 })
             },
             //获取商品信息
-            getGoodsinfo(){
-                this.$http.get('api/goods/getinfo/'+this.id).then(result=>{
+            getGoodsinfo() {
+                this.$http.get('api/goods/getinfo/' + this.id).then(result => {
                     if (result.body.status == 0) {
                         this.goodsinfolist = result.body.message[0];
                     }
                 })
             },
-            goGoodsDesc(){
-                this.$router.push({ name: 'goodsdesc', params: { id:this.id} });
+            goGoodsDesc() {
+                this.$router.push({name: 'goodsdesc', params: {id: this.id}});
             },
-            goGoodsComment(){
-                this.$router.push({ name: 'gogoodscomment', params:  { id:this.id} });
+            goGoodsComment() {
+                this.$router.push({name: 'gogoodscomment', params: {id: this.id}});
             },
             //添加到购物车
-            addtoShopCar(){
-                this.ballflag=true;
+            addtoShopCar() {
+                this.ballflag = !this.ballflag;
+                //{id:商品id,count:"购买数量",price:"单价",select:true}
+                //得到购物车对象
+
+                let carobj = {
+                    id: this.id,
+                    count: this.selectedCount,
+                    price: this.goodsinfolist.sell_price,
+                    selectd: true
+                };
+                this.$store.commit('addToCar',carobj)
+
             },
-            beforeenter(el){
+            beforeenter(el) {
                 //设置小球开始动画的起始位置
                 el.style.transform = "translate(0,0)"
             },
-            enter(el,done){
+            enter(el, done) {
                 el.offsetWidth
                 //表示动画 开始之后的样式 这里,可以设置小球完成动画之后的状态
 
-                //获取小球在页面中的位置
                 const ballPosition = this.$refs.ball.getBoundingClientRect();
+                //获取小球在页面中的位置
                 //得到徽标在页面中的位置
                 const badgePosition = document.getElementById("badge").getBoundingClientRect();
                 const xDist = (badgePosition.left - ballPosition.left);
-                const yDist = (badgePosition.top - ballPosition.top)+ballPosition.height;
-
+                const yDist = (badgePosition.top - ballPosition.top) + ballPosition.height;
+                console.log("x:"+xDist+"y:"+yDist)
                 el.style.transform = `translate(${xDist}px, ${yDist}px)`;
                 el.style.transition = "all .5s cubic-bezier(.4,-0.3,1,.68)";
                 done();
             },
-            afterenter(el){
+            afterenter(el) {
                 this.ballflag = !this.ballflag;
             },
-            getSelectedCount(count){
+            getSelectedCount(count) {
                 this.selectedCount = count;
-                console.log("父组件拿到的值为:"+count);
+                console.log("父组件拿到的值为:" + count);
             }
         },
         created() {
@@ -142,31 +154,34 @@
         background: #EEE;
         overflow: hidden;
     }
-    .price{
+
+    .price {
         color: black;
-        >span{
-            &:nth-of-type(1){
-                >del{
+        > span {
+            &:nth-of-type(1) {
+                > del {
                     color: red;
                     padding-left: 10px;
                 }
             }
-            &:nth-of-type(2){
+            &:nth-of-type(2) {
                 margin-left: 10px;
-                >del{
+                > del {
                     color: red;
                     padding-left: 15px;
                 }
             }
         }
     }
-    .mui-card-footer{
+
+    .mui-card-footer {
         display: block;
-        button{
+        button {
             margin: 15px 0;
         }
     }
-    .ball{
+
+    .ball {
         width: 15px;
         height: 15px;
         border-radius: 50%;
